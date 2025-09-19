@@ -870,6 +870,16 @@ class TexasHoldEm:
 
         return MoveIterator(possible)
 
+    def total_pot_amount(self) -> int:
+        """
+        Returns:
+            int: Total chips in all pots including current round bets.
+
+        """
+        return sum(pot.get_total_amount() for pot in self.pots)
+
+    
+
     def _take_action(self, action: ActionType, total: Optional[int] = None):
         """
         Execute the action for the current player. Assumes the move is valid.
