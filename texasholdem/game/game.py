@@ -878,14 +878,7 @@ class TexasHoldEm:
         """
         return sum(pot.get_total_amount() for pot in self.pots)
 
-    def legal_actions(self):
-        """
-        Alias for :meth:`get_available_moves` to expose a simple API.
-
-        Returns:
-            MoveIterator: Iterator over legal actions and raise totals.
-        """
-        return self.get_available_moves()
+    
 
     def _take_action(self, action: ActionType, total: Optional[int] = None):
         """
