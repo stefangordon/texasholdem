@@ -264,6 +264,7 @@ class TexasHoldEm:
         )
 
         self.btn_loc = random.choice(self.players).player_id
+        self._btn_loc_fixed = False  # Track if button position was explicitly set
         self.bb_loc = -1
         self.sb_loc = -1
         self.current_player = -1
