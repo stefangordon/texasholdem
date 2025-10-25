@@ -1071,10 +1071,14 @@ class TexasHoldEm:
         """
         return self.hands.get(player_id, [])
 
-    def start_hand(self):
+    def start_hand(self, btn_loc: Optional[int] = None):
         """
         Starts a new hand. Handles :obj:`~texasholdem.game.player_state.PlayerState.SKIP`,
         not enough chips, resetting pots, rotation and posting of blinds, dealing cards, etc.
+
+        Arguments:
+            btn_loc (int, optional): If provided, sets the button to this position instead of
+                rotating. Useful for replaying specific hands or external position control.
 
         Raises:
             ValueError: If a hand already in progress.
@@ -1082,6 +1086,13 @@ class TexasHoldEm:
         """
         if self.is_hand_running():
             raise ValueError("In the middle of a hand!")
+
+        # Set button position if explicitly provided (before _prehand runs)
+        if btn_loc is not None:
+            self.btn_loc = btn_loc
+            self._btn_loc_fixed = True
+        else:
+            self._btn_loc_fixed = False
 
         self.hand_phase = HandPhase.PREHAND
         self._handstate_handler[self.hand_phase]()
