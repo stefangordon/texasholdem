@@ -327,9 +327,15 @@ class TexasHoldEm:
             self.game_state = GameState.STOPPED
             return
 
-        # change btn loc (at least 2 players)
-        self.btn_loc = active_players[0]
-        self.sb_loc = active_players[1]
+        # Only rotate button if it wasn't explicitly set
+        if not self._btn_loc_fixed:
+            # change btn loc (at least 2 players)
+            self.btn_loc = active_players[0]
+            self.sb_loc = active_players[1]
+        else:
+            # Button was explicitly set, just compute SB location
+            # Find the next active player after button for SB
+            self.sb_loc = next(self.in_pot_iter(self.btn_loc + 1))
 
         # heads up edge case => sb = btn
         if len(active_players) == 2:
